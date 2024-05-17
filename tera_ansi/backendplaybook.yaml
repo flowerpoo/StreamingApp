@@ -1,0 +1,71 @@
+---
+- name: Deployment in backend application 
+  hosts: backend
+  become: yes
+  gather_facts: true
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    docker_image_name: "flowerking21/streaming_backend_streamservice:{{ jenkins_build_number }}"
+ 
+
+  tasks:
+    - name: Print gathered facts
+      debug:
+        var: ansible_facts
+        
+    - name: Update apt package cache (for Debian/Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+    - name: Debug gathered facts
+      debug:
+        var: ansible_os_family
+
+    - name: Install Docker dependencies
+      package:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+      when: ansible_os_family == 'Debian'
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+      when: ansible_os_family == 'Debian'
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+
+    - name: Pull Docker image for backend
+      docker_image:
+        name: "{{ docker_image_name }}"
+        source: pull
+
+    - name: Run Docker container for backend
+      docker_container:
+        name: mycontainer
+        image: "{{ docker_image_name }}"
+        ports:
+          - "3002:3002"
+        restart_policy: always

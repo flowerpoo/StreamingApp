@@ -1,0 +1,93 @@
+pipeline {
+    agent any
+    environment{
+        AWS_KEY='aws-keys'
+        AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        SSH_KEY = credentials('ssh_key')
+        GIT_REPO_URL = "https://github.com/garimas007/StreamingApp.git/"
+        GIT_CREDENTIALS_ID = "github-credentials"
+        
+       
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('CHECKOUT') {
+            steps {
+                echo 'clone the git code' 
+                git branch: 'poo', credentialsId: 'github-credentials',url:'https://github.com/garimas007/StreamingApp.git'
+            }
+        }
+        
+       stage('Terraform Apply') {
+            steps {
+                script{
+                // Initialize and apply Terraform
+                dir('tera_ansi'){
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                    def filePath ='inventory\necho'
+                        sh "cat ${filePath}"
+                 }
+                }
+            }
+        }
+        
+        stage('copy url.js'){
+            steps{
+                script{
+                    dir('frontend') {
+                    sh "cp ../tera_ansi/url.js  ./src/url.js"
+                    }
+                }
+            }
+        }
+        
+        stage("test"){
+            steps{
+                script{
+                    sh "ls -la"
+                    sh "cat ./frontend/src/url.js"
+                }
+            }
+        }
+        stage('Configure Git User') {
+            steps {
+                script {
+                    // Retrieve Git username and password from credentials
+                      withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh "git config --global credential.helper store"
+                        sh "git config --global user.name 'poovarasan'"
+                        sh "git config --global user.email 'poovarasancgm@gmail.com'"
+                        sh "git push https://${GIT_USER}:${GIT_PASSWORD}@github.com/garimas007/StreamingApp.git  poo"
+                    }
+                    
+                }
+            }
+        }
+        stage('Push Changes to Git') {
+            steps {
+                script {
+                    sh 'git add tera_ansi/inventory'
+                    sh 'git add frontend/src/url.js'
+                    sh 'git commit -m "Updated inventory file with new EC2 instance"'
+                    sh 'git push origin poo'
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+}

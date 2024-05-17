@@ -7,6 +7,7 @@ const awsS3Bucket = process.env.AWS_S3_BUCKET;
 const awsRegion = process.env.AWS_REGION;
 const awsKey = process.env.AWS_KEY_ID;
 const awsSecret = process.env.AWS_SECRET_KEY;
+// console.log(awsS3Bucket)
 
 awsSdk.config.update({
   accessKeyId: awsKey,
@@ -18,18 +19,21 @@ const s3 = new awsSdk.S3();
 const videoKey = "theNights.mp4"; // Adjust the path to your video in the S3 bucket
 const CHUNK_SIZE = 10 ** 6; // 1 MB
 
+
 const streamingVideo = async (req, res) => {
     const range = req.headers.range;
     if (!range) {
         res.status(400).send("Requires Range header");
+        //console.log(range);
         return;
     }
 
     // Fetch the size of the video file from S3
     const params = {
-        Bucket: awsS3Bucket,
+        Bucket: "vedio-bucket",
         Key: videoKey
     };
+
 
     try {
         const headCode = await s3.headObject(params).promise();
