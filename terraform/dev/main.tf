@@ -22,7 +22,7 @@ module "igw" {
   public_subnet_cidr_block  = var.public_subnet_cidr_block
 }
 
-/*
+
 module "nat" {
   depends_on = [ module.vpc,module.igw ]
 
@@ -34,7 +34,7 @@ module "nat" {
   public_subnet_cidr_block  = var.public_subnet_cidr_block
   
 }
-*/
+
 
 
 module "securitygroup" {
@@ -73,7 +73,7 @@ module "ec2" {
 module "elb" {
   source = "../modules/elb"
   depends_on = [
-    module.vpc, module.ec2
+    module.vpc
   ]
 
   // Variables

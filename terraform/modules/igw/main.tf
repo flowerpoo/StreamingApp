@@ -6,7 +6,7 @@ resource "aws_internet_gateway" "gw" {
  }
 }
 
-resource "aws_route_table" "rt" {
+resource "aws_route_table" "public_route_table" {
  vpc_id = var.vpc_id
 
  route {
@@ -15,12 +15,12 @@ resource "aws_route_table" "rt" {
  }
  
  tags = {
-   Name = "Route Table"
+   Name = "public_route_table"
  }
 }
 
 resource "aws_route_table_association" "public_subnet_asso" {
  count = length(var.public_subnet_id)
  subnet_id      = var.public_subnet_id[count.index]
- route_table_id = aws_route_table.rt.id
+ route_table_id = aws_route_table.public_route_table.id
 }

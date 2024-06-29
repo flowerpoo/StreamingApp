@@ -11,6 +11,7 @@ resource "aws_instance" "frontend_instance" {
 
   tags = {
     Name = "FrontendInstance-${count.index}"
+    Group_Name = "poo,garima,praj,nikil,pavan"
   }
 }
 

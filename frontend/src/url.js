@@ -1,1 +1,1 @@
-export let vediosource= "http://18.234.195.100:3002/streaming"
+export let vediosource= "stream-alb-private-2145007388.ap-south-1.elb.amazonaws.com"
