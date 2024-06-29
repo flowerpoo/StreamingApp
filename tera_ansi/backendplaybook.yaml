@@ -5,7 +5,7 @@
   gather_facts: true
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-    docker_image_name: "flowerking21/streaming_backend_streamservice:{{ jenkins_build_number }}"
+    docker_image_name: "flowerking21/streaming_backend_streamservice:5"
  
 
   tasks:
