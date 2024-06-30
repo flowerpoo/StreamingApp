@@ -3,8 +3,8 @@ public-instance-0 ansible_host=13.127.98.96 ansible_user=ubuntu
 public-instance-1 ansible_host=15.206.151.75 ansible_user=ubuntu
 
 [backend]
-private-instance-0 ansible_host=10.0.3.236 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@13.127.98.96"'
-private-instance-1 ansible_host=10.0.4.42 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@15.206.151.75"'
+private-instance-0 ansible_host=10.0.3.236 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i flower.pem ubuntu@13.127.98.96"'
+private-instance-1 ansible_host=10.0.4.42 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i flower.pem  ubuntu@15.206.151.75"'
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
