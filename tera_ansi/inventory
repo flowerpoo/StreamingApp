@@ -1,6 +1,6 @@
 [frontend]
-public-instance-1 ansible_host=65.0.169.139 ansible_user=ubuntu 
-public-instance-2 ansible_host=13.233.45.186 ansible_user=ubuntu 
+public-instance-1 ansible_host=65.0.169.139 ansible_user=ec2-user
+public-instance-2 ansible_host=13.233.45.186 ansible_user=ec2-user
 
 [backend]
 private-instance-1 ansible_host=10.0.3.253 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@65.0.169.139"'
