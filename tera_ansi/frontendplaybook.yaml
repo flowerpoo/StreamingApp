@@ -5,7 +5,7 @@
   gather_facts: true
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-    docker_image_name: "flowerking21/streaming_frontend:5"
+    docker_image_name: "flowerking21/streaming_frontend:6"
  
 
   tasks:
