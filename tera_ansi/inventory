@@ -6,5 +6,7 @@ public-instance-1 ansible_host=15.206.151.75 ansible_user=ubuntu
 private-instance-0 ansible_host=10.0.3.236 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i flower.pem ubuntu@13.127.98.96"'
 private-instance-1 ansible_host=10.0.4.42 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i flower.pem  ubuntu@15.206.151.75"'
 
+[bastion]
+bastion-host ansible_host=13.127.98.96 ansible_user=ubuntu ansible_ssh_private_key_file=flower.pem
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
