@@ -1,10 +1,10 @@
 [frontend]
-public-instance-1 ansible_host=13.201.1.44 ansible_user=ubuntu
-public-instance-2 ansible_host=65.2.121.91 ansible_user=ubuntu
+public-instance-1 ansible_host=65.0.169.139 ansible_user=ubuntu
+public-instance-2 ansible_host=13.233.45.186 ansible_user=ubuntu
 
 [backend]
-private-instance-1 ansible_host=10.0.3.37 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ec2-user@13.201.1.44"'
-private-instance-2 ansible_host=10.0.4.48 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ec2-user@65.2.121.91"'
+private-instance-1 ansible_host=10.0.3.253 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@65.0.169.139"'
+private-instance-2 ansible_host=10.0.4.196 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@13.233.45.186"'
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
