@@ -1,6 +1,6 @@
 [frontend]
-public-instance-1 ansible_host=65.0.169.139 ansible_user=ubuntu ansible_ssh_private_key_file=/var/lib/jenkins/workspace/deployment/tera_ansi@tmp/private_key_15628627688163275983.key
-public-instance-2 ansible_host=13.233.45.186 ansible_user=ubuntu ansible_ssh_private_key_file=/var/lib/jenkins/workspace/deployment/tera_ansi@tmp/private_key_15628627688163275983.key
+public-instance-1 ansible_host=65.0.169.139 ansible_user=ubuntu ansible_ssh_private_key_file= "flower.pem"
+public-instance-2 ansible_host=13.233.45.186 ansible_user=ubuntu ansible_ssh_private_key_file= "flower.pem"
 
 [backend]
 private-instance-1 ansible_host=10.0.3.253 ansible_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@65.0.169.139"'
