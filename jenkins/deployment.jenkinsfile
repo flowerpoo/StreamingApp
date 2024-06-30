@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+    environment{
+        SSH_KEY = credentials('ssh_key')
+       
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage("clone"){
+            steps{
+                echo 'clone the git code' 
+                git branch: 'main', url:'https://github.com/flowerpoo/StreamingApp.git'
+            }
+        }
+        stage('frontend'){
+            steps{
+                script{
+                    dir('tera_ansi'){
+                         sh "ls -la"
+                                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh_key', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                                     // Set appropriate permissions on SSH key file
+                                        sh "echo \"$SSH_PRIVATE_KEY\" > ssh_key"
+                                        sh "chmod 600 ssh_key"
+
+                                 ansiblePlaybook(
+                                    playbook: 'frontendplaybook.yaml',
+                                    inventory: 'inventory',
+                                    credentialsId: 'ssh_key',
+                                    //extras: "-e 'ansible_python_interpreter=/usr/bin/python3 -e jenkins_build_number=${env.BUILD_ID}'"
+                                )
+                                 }
+                    }
+                }
+            }
+        } 
+        /*
+        stage('backend'){
+            steps{
+                script{
+                    dir('tera_ansi'){
+                        sh "ls -la"
+                                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh_key', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                                     // Set appropriate permissions on SSH key file
+                                        sh "echo \"$SSH_PRIVATE_KEY\" > ssh_key"
+                                        sh "chmod 600 ssh_key"
+
+                                 ansiblePlaybook(
+                                    playbook: 'backendplaybook.yaml',
+                                    inventory: 'inventory',
+                                    credentialsId: 'ssh_key',
+                                    //extras: "-e 'ansible_python_interpreter=/usr/bin/python3 -e jenkins_build_number=${env.BUILD_ID}'"
+                                )
+                                 }
+                        
+                    }
+                }
+            }
+        } */
+    }
+}
