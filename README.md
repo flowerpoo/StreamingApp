@@ -51,6 +51,8 @@ The objective is to develop a robust DevOps pipeline for a streaming application
    - Automate the backup process for the S3 bucket and on-premise MongoDB database, including periodic backups and secure storage of backup data.
 ---------------------------------------------------------------------------------------
 # **SOLUTION**
+# Architecture 
+![alt text](Capstone.png)
 
 # local setup
 
