@@ -155,5 +155,33 @@ To established connection between backend and frontend instances, backend ip add
 5. Output images are mentioned in pics folder named ansible_frontend and ansible_backend
 
 ---------------------
-# NEXT!!!!!!!!!!!!!
+# Terraform 
+Terraform folder contains code to create a entire infrastructure. To create a infrastructure do to terraform dev folder and then create tfvars file containing following components.
 
+```
+# terraform.tfvars
+region = "ap-south-1"
+vpc_cidr_block = "10.0.0.0/16"
+public_subnet_cidr_block = ["10.0.1.0/24","10.0.2.0/24"]
+private_subnet_cidr_block = ["10.0.3.0/24","10.0.4.0/24"]
+availability_zone = ["ap-south-1a","ap-south-1b"]
+frontend_instance_sg = ""
+backend_instance_sg = ""
+frontend_instance_ami = ""
+backend_instance_ami = ""
+instance_type = ""
+key_name = ""
+```
+Execure the bellow mentioned command to test and apply.
+
+```
+terraform plan 
+terraform apply 
+```
+* well done your infrastructure is ready.
+* Next do the deployments trigger the jenkins pipeline on a note better create a jenkins server inside VPC which helps to avaoid ssh error in Ansible.
+* Once deployments done then test the changes.
+* By changing the region and other components details you can able to replicate the same infrastructure in some other region.
+* We can go with blue green deployments by route traffic to other region.
+
+# Happy Learning!!!!!!
