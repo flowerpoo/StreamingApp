@@ -52,7 +52,7 @@ The objective is to develop a robust DevOps pipeline for a streaming application
 ---------------------------------------------------------------------------------------
 # **SOLUTION**
 # Architecture 
-![alt text](c:/Users/Asus/Downloads/sample.drawio.png)
+![alt text](sample.drawio.png)
 
 # local setup
 
